@@ -3,25 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FirstFragment">
+    android:background="@color/fragment_first"
+
+    tools:context=".SecondFragment">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:textSize="32sp"
-        android:gravity="center_horizontal"
+        android:gravity="center"
+        android:textColor="@color/white"
         android:text="First Fragment" />
 
-<!--    <FrameLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:id="@+id/frameLayout"/>-->
 
 
-        <fragment
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/fragment_host"
-            android:name="com.androidready.demo.SecondFragment"/>
 
 </FrameLayout>

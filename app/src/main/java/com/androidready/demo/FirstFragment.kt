@@ -12,12 +12,12 @@ class FirstFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        println("Fragment : onAttach")
+        println("First Fragment : onAttach")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        println("Fragment : onCreate")
+        println("First Fragment : onCreate")
        // addFragment(SecondFragment())
 
     }
@@ -43,50 +43,50 @@ class FirstFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        println("Fragment : onActivityCreated")
+        println("First Fragment : onActivityCreated")
 
 
     }
 
     override fun onStart() {
         super.onStart()
-        println("Fragment : onStart")
+        println("First Fragment : onStart")
 
     }
 
     override fun onResume() {
         super.onResume()
-        println("Fragment : onResume")
+        println("First Fragment : onResume")
 
     }
 
     override fun onPause() {
         super.onPause()
-        println("Fragment : onPause")
+        println("First Fragment : onPause")
 
     }
 
     override fun onStop() {
         super.onStop()
-        println("Fragment : onStop")
+        println("First Fragment : onStop")
 
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        println("Fragment : onDestroyView")
+        println("First Fragment : onDestroyView")
 
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        println("Fragment : onDestroy")
+        println("First Fragment : onDestroy")
 
     }
 
     override fun onDetach() {
         super.onDetach()
-        println("Fragment : onDetach")
+        println("First Fragment : onDetach")
 
     }
 
