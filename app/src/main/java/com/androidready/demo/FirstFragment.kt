@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
-class DemoFragment : Fragment() {
+class FirstFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -18,6 +18,17 @@ class DemoFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         println("Fragment : onCreate")
+       // addFragment(SecondFragment())
+
+    }
+    private fun addFragment(secondFragment: SecondFragment) {
+
+        val fragmentManager = childFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+
+        fragmentTransaction.add(R.id.frameLayout,secondFragment)
+        fragmentTransaction.commit()
+        println("Fragment First : Fragment Added")
 
     }
 
@@ -27,7 +38,7 @@ class DemoFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         println("Fragment : onCreateView")
-        return inflater.inflate(R.layout.fragment_demo, container, false)
+        return inflater.inflate(R.layout.fragment_first, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

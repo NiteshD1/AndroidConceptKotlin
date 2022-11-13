@@ -9,6 +9,18 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         println("Activity : onCreate")
 
+        addFragment(FirstFragment())
+    }
+
+    private fun addFragment(firstFragment: FirstFragment) {
+
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+
+        fragmentTransaction.add(R.id.frameLayout,firstFragment)
+        fragmentTransaction.commit()
+        println("Activity : Fragment Added")
+
     }
 
     override fun onStart() {
