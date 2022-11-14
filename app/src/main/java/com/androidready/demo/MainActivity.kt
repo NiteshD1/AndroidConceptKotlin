@@ -122,7 +122,5 @@ class MainActivity : AppCompatActivity(),View.OnClickListener,UpdateActivity {
         println("Activity is Updated for Data Fetch")
     }
 
-//    override fun onAttachFragment(fragmentManager: FragmentManager, fragment: Fragment) {
-//        TODO("Not yet implemented")
-//    }
+
 }
