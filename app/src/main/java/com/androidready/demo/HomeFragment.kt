@@ -7,11 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.navigation.findNavController
+import com.androidready.demo.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
 
-    private lateinit var updateActivity: UpdateActivity
-
+    private lateinit var binding: FragmentHomeBinding
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
@@ -22,16 +23,7 @@ class HomeFragment : Fragment() {
         super.onCreate(savedInstanceState)
         println("Fragment : onCreate")
     }
-    private fun addFragment(secondFragment: SecondFragment) {
 
-        val fragmentManager = childFragmentManager
-        val fragmentTransaction = fragmentManager.beginTransaction()
-
-        fragmentTransaction.add(R.id.frameLayout,secondFragment)
-        fragmentTransaction.commit()
-        println("Fragment First : Fragment Added")
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,27 +31,30 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         println("Fragment : onCreateView")
-        val view = inflater.inflate(R.layout.fragment_home, container, false)
-        val fetchButton: Button = view.findViewById(R.id.button_fetch)
+        binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        fetchButton.setOnClickListener(View.OnClickListener {
-            println("Data Fetched Button Clicked")
-            updateActivity.updateActivityForDataFetch()
+
+        binding.buttonFirst.setOnClickListener(View.OnClickListener {
+            //it.findNavController().navigate(R.id.action_homeFragment_to_firstFragment)
+
+            val action = HomeFragmentDirections.actionHomeFragmentToFirstFragment("100")
+            it.findNavController().navigate(action)
+
         })
 
-        return view
+        binding.buttonSecond.setOnClickListener(View.OnClickListener {
+            it.findNavController().navigate(R.id.action_homeFragment_to_secondFragment)
+        })
+
+        return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         println("Fragment : onActivityCreated")
-
-
     }
 
-    fun setUpdateActivityObject(updateActivity: UpdateActivity){
-        this.updateActivity = updateActivity
-    }
+
     override fun onStart() {
         super.onStart()
         println("Fragment : onStart")

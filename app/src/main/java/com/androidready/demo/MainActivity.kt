@@ -13,7 +13,7 @@ import androidx.fragment.app.FragmentTransaction
 import com.androidready.demo.R.*
 import com.androidready.demo.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity(),View.OnClickListener,UpdateActivity {
+class MainActivity : AppCompatActivity(),View.OnClickListener {
 
     private lateinit var binding: ActivityMainBinding
     val fragmentManager = supportFragmentManager
@@ -26,10 +26,6 @@ class MainActivity : AppCompatActivity(),View.OnClickListener,UpdateActivity {
         val view = binding.root
         setContentView(view)
         println("Activity : onCreate")
-
-        binding.buttonHome.setOnClickListener(this)
-        binding.buttonFirst.setOnClickListener(this)
-        binding.buttonSecond.setOnClickListener(this)
 
         fragmentManager.addFragmentOnAttachListener(
             FragmentOnAttachListener{ fragmentManager, fragment ->
@@ -57,7 +53,6 @@ class MainActivity : AppCompatActivity(),View.OnClickListener,UpdateActivity {
             fragmentManager.popBackStack("home_fragment",POP_BACK_STACK_INCLUSIVE)
             fragmentTransaction.add(id.frameLayout,fragment,"home")
             fragmentTransaction.addToBackStack("home_fragment")
-            fragment.setUpdateActivityObject(this)
         }else{
             fragmentTransaction.add(id.frameLayout,fragment)
             fragmentTransaction.addToBackStack(null)
@@ -109,18 +104,9 @@ class MainActivity : AppCompatActivity(),View.OnClickListener,UpdateActivity {
 
     override fun onClick(view : View?) {
 
-        if (view != null) {
-            when(view.id){
-                id.button_home -> addFragment(HomeFragment())
-                id.button_first -> addFragment(FirstFragment())
-                id.button_second -> addFragment(SecondFragment())
-            }
-        }
+
     }
 
-    override fun updateActivityForDataFetch() {
-        println("Activity is Updated for Data Fetch")
-    }
 
 
 }
