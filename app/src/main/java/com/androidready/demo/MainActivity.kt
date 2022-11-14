@@ -1,14 +1,19 @@
 package com.androidready.demo
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroupOverlay
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE
+import androidx.fragment.app.FragmentOnAttachListener
 import androidx.fragment.app.FragmentTransaction
+import com.androidready.demo.R.*
 import com.androidready.demo.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity(),View.OnClickListener {
+class MainActivity : AppCompatActivity(),View.OnClickListener,UpdateActivity {
 
     private lateinit var binding: ActivityMainBinding
     val fragmentManager = supportFragmentManager
@@ -26,16 +31,37 @@ class MainActivity : AppCompatActivity(),View.OnClickListener {
         binding.buttonFirst.setOnClickListener(this)
         binding.buttonSecond.setOnClickListener(this)
 
+        fragmentManager.addFragmentOnAttachListener(
+            FragmentOnAttachListener{ fragmentManager, fragment ->
+                if(fragment == fragmentManager.findFragmentByTag("home")){
+                     println("Home Fragment is attached")
+                }
+//                if(fragment == fragmentManager.findFragmentById(R.layout.fragment_home)){
+//                    println("Home Fragment is attached")
+//                }
+        })
+
     }
+
 
     private fun addFragment(fragment : Fragment) {
 
+
         fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.add(R.id.frameLayout,fragment)
+       // fragmentTransaction.add(id.frameLayout,fragment)
+
         //fragmentTransaction.replace(R.id.frameLayout,fragment)
         //fragmentTransaction.remove(R.id.frameLayout,fragment)
 
-        //fragmentTransaction.addToBackStack(null)
+        if(fragment is HomeFragment){
+            fragmentManager.popBackStack("home_fragment",POP_BACK_STACK_INCLUSIVE)
+            fragmentTransaction.add(id.frameLayout,fragment,"home")
+            fragmentTransaction.addToBackStack("home_fragment")
+            fragment.setUpdateActivityObject(this)
+        }else{
+            fragmentTransaction.add(id.frameLayout,fragment)
+            fragmentTransaction.addToBackStack(null)
+        }
 
         fragmentTransaction.commit()
 
@@ -73,8 +99,11 @@ class MainActivity : AppCompatActivity(),View.OnClickListener {
 
     }
 
+    @SuppressLint("ResourceType")
     override fun onBackPressed() {
         //fragmentManager.popBackStack()
+
+
         super.onBackPressed()
     }
 
@@ -82,10 +111,18 @@ class MainActivity : AppCompatActivity(),View.OnClickListener {
 
         if (view != null) {
             when(view.id){
-                R.id.button_home -> addFragment(HomeFragment())
-                R.id.button_first -> addFragment(FirstFragment())
-                R.id.button_second -> addFragment(SecondFragment())
+                id.button_home -> addFragment(HomeFragment())
+                id.button_first -> addFragment(FirstFragment())
+                id.button_second -> addFragment(SecondFragment())
             }
         }
     }
+
+    override fun updateActivityForDataFetch() {
+        println("Activity is Updated for Data Fetch")
+    }
+
+//    override fun onAttachFragment(fragmentManager: FragmentManager, fragment: Fragment) {
+//        TODO("Not yet implemented")
+//    }
 }

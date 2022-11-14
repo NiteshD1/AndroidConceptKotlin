@@ -6,8 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 
 class HomeFragment : Fragment() {
+
+    private lateinit var updateActivity: UpdateActivity
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -18,7 +21,7 @@ class HomeFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         println("Fragment : onCreate")
-       // addFragment(SecondFragment())
+
 
     }
     private fun addFragment(secondFragment: SecondFragment) {
@@ -38,7 +41,15 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         println("Fragment : onCreateView")
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        val view = inflater.inflate(R.layout.fragment_home, container, false)
+        val fetchButton: Button = view.findViewById(R.id.button_fetch)
+
+        fetchButton.setOnClickListener(View.OnClickListener {
+            println("Data Fetched Button Clicked")
+            updateActivity.updateActivityForDataFetch()
+        })
+
+        return view
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -48,6 +59,9 @@ class HomeFragment : Fragment() {
 
     }
 
+    fun setUpdateActivityObject(updateActivity: UpdateActivity){
+        this.updateActivity = updateActivity
+    }
     override fun onStart() {
         super.onStart()
         println("Fragment : onStart")
