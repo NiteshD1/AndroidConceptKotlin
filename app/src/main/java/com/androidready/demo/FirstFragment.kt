@@ -24,7 +24,6 @@ class FirstFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         println("First Fragment : onCreate")
-       // addFragment(SecondFragment())
 
     }
     private fun addFragment(secondFragment: SecondFragment) {
