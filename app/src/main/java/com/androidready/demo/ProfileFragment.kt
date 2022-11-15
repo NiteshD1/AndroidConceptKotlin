@@ -8,12 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
-import com.androidready.demo.databinding.FragmentFirstBinding
 import com.androidready.demo.databinding.FragmentHomeBinding
+import com.androidready.demo.databinding.FragmentProfileBinding
 
-class FirstFragment : Fragment() {
-    private lateinit var binding: FragmentFirstBinding
-    val args: FirstFragmentArgs by navArgs()
+class ProfileFragment : Fragment() {
+    private lateinit var binding: FragmentProfileBinding
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -43,11 +42,7 @@ class FirstFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         println("Fragment : onCreateView")
-        binding = FragmentFirstBinding.inflate(inflater, container, false)
-
-        binding.buttonSetting.setOnClickListener(View.OnClickListener {
-            it.findNavController().navigate(R.id.action_global_settingFragment)
-        })
+        binding = FragmentProfileBinding.inflate(inflater, container, false)
 
         return binding.root
     }
@@ -56,7 +51,7 @@ class FirstFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         println("First Fragment : onActivityCreated")
 
-        binding.textViewForSafeArg.text = args.data
+
 
     }
 

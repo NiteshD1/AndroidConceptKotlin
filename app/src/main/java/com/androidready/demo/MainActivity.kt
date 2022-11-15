@@ -16,6 +16,7 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.navigation.Navigation
 import com.androidready.demo.R.*
 import com.androidready.demo.databinding.ActivityMainBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 
 class MainActivity : AppCompatActivity(), View.OnClickListener,
@@ -48,8 +49,54 @@ class MainActivity : AppCompatActivity(), View.OnClickListener,
 
         binding.navigationView.setNavigationItemSelectedListener(this)
 
+        setupBottomNavigation()
 
     }
+
+    private fun setupBottomNavigation() {
+        val homeFragment=HomeFragment()
+        val settingFragment=SettingFragment()
+        val profileFragment=ProfileFragment()
+
+        setCurrentFragment(homeFragment)
+
+        binding.bottomNavigation.setOnNavigationItemSelectedListener {
+            when(it.itemId){
+                id.item_home->setCurrentFragment(homeFragment)
+                id.item_setting->setCurrentFragment(settingFragment)
+                id.item_profile->setCurrentFragment(profileFragment)
+
+            }
+            true
+        }
+
+//        binding.bottomNavigation.setOnNavigationItemSelectedListener {
+//            when(it.itemId){
+//                id.item_home-> {
+//                    println("home selected")
+//                    Navigation.findNavController(this, R.id.fragmentContainerView)
+//                        .navigate(R.id.action_global_homeFragment)
+//                }
+//                id.item_setting-> {
+//                    println("setting selected")
+//                    Navigation.findNavController(this, R.id.fragmentContainerView)
+//                        .navigate(R.id.action_global_settingFragment)
+//                }
+//                id.item_profile-> {
+//                    println("profile selected")
+//                    Navigation.findNavController(this, R.id.fragmentContainerView)
+//                        .navigate(R.id.action_global_profileFragment)
+//                }
+//            }
+//            true
+//        }
+    }
+
+    private fun setCurrentFragment(fragment:Fragment)=
+        supportFragmentManager.beginTransaction().apply {
+            replace(R.id.fragmentContainerView,fragment)
+            commit()
+        }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return if (actionBarDrawerToggle.onOptionsItemSelected(item)) {

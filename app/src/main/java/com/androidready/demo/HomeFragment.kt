@@ -34,17 +34,6 @@ class HomeFragment : Fragment() {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
 
-        binding.buttonFirst.setOnClickListener(View.OnClickListener {
-            //it.findNavController().navigate(R.id.action_homeFragment_to_firstFragment)
-
-            val action = HomeFragmentDirections.actionHomeFragmentToFirstFragment("100")
-            it.findNavController().navigate(action)
-
-        })
-
-        binding.buttonSecond.setOnClickListener(View.OnClickListener {
-            it.findNavController().navigate(R.id.action_homeFragment_to_secondFragment)
-        })
 
         return binding.root
     }
