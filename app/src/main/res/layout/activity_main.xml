@@ -11,41 +11,30 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/fragmentContainerView"
-            android:name="androidx.navigation.fragment.NavHostFragment"
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:defaultNavHost="true"
-            app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
+            android:layout_height="wrap_content"
+            app:tabTextColor="@color/white"
+            app:tabSelectedTextColor="@color/black"
+            android:background="@color/design_default_color_primary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:navGraph="@navigation/my_nav_graph" />
+            app:layout_constraintTop_toTopOf="parent">
 
+        </com.google.android.material.tabs.TabLayout>
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottom_navigation"
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewPager"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_alignParentBottom="true"
-            app:itemBackground="@color/design_default_color_primary"
-            app:itemIconTint="@android:color/white"
-            app:itemTextColor="@android:color/white"
+            android:layout_height="0dp"
+            android:layout_below="@id/tabLayout"
+            android:layout_centerInParent="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:menu="@menu/bottom_menu" />
-
+            app:layout_constraintTop_toBottomOf="@+id/tabLayout" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/navigationView"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:visibility="visible"
-        app:menu="@menu/menu" />
 
 
 </androidx.drawerlayout.widget.DrawerLayout>

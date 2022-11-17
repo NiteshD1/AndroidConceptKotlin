@@ -25,16 +25,6 @@ class ProfileFragment : Fragment() {
         println("First Fragment : onCreate")
 
     }
-    private fun addFragment(secondFragment: SecondFragment) {
-
-        val fragmentManager = childFragmentManager
-        val fragmentTransaction = fragmentManager.beginTransaction()
-
-        fragmentTransaction.add(R.id.frameLayout,secondFragment)
-        fragmentTransaction.commit()
-        println("Fragment First : Fragment Added")
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

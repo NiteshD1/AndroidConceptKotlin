@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/fragment_setting"
     tools:context=".SettingFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -10,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:textSize="32sp"
+        android:textColor="@color/white"
         android:text="Setting Screen"
         android:gravity="center"/>
 

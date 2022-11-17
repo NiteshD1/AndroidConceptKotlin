@@ -15,12 +15,13 @@ import androidx.fragment.app.FragmentOnAttachListener
 import androidx.fragment.app.FragmentTransaction
 import androidx.navigation.Navigation
 import com.androidready.demo.R.*
+import com.androidready.demo.adapters.MyAdapter
 import com.androidready.demo.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
+import com.google.android.material.tabs.TabLayout
 
-class MainActivity : AppCompatActivity(), View.OnClickListener,
-    NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity(), View.OnClickListener{
 
     private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
     private lateinit var binding: ActivityMainBinding
@@ -36,73 +37,34 @@ class MainActivity : AppCompatActivity(), View.OnClickListener,
         println("Activity : onCreate")
 
 
-        actionBarDrawerToggle =
-            ActionBarDrawerToggle(this, binding.drawerLayout, string.nav_open, string.nav_close)
 
-        // pass the Open and Close toggle for the drawer layout listener
-        // to toggle the button
-        binding.drawerLayout.addDrawerListener(actionBarDrawerToggle)
-        actionBarDrawerToggle.syncState()
 
-        // to make the Navigation drawer icon always appear on the action bar
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        binding.navigationView.setNavigationItemSelectedListener(this)
-
-        setupBottomNavigation()
+        setupTabLayout()
 
     }
 
-    private fun setupBottomNavigation() {
-        val homeFragment=HomeFragment()
-        val settingFragment=SettingFragment()
-        val profileFragment=ProfileFragment()
+    private fun setupTabLayout() {
 
-        setCurrentFragment(homeFragment)
+        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Home"))
+        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Profile"))
+        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Setting"))
+        binding.tabLayout.tabGravity = TabLayout.GRAVITY_FILL
 
-        binding.bottomNavigation.setOnNavigationItemSelectedListener {
-            when(it.itemId){
-                id.item_home->setCurrentFragment(homeFragment)
-                id.item_setting->setCurrentFragment(settingFragment)
-                id.item_profile->setCurrentFragment(profileFragment)
+        val adapter = MyAdapter(this, supportFragmentManager,
+            binding.tabLayout.tabCount)
 
+        binding.viewPager.adapter = adapter
+        binding.viewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(binding.tabLayout))
+
+        binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                binding.viewPager.currentItem = tab.position
             }
-            true
-        }
-
-//        binding.bottomNavigation.setOnNavigationItemSelectedListener {
-//            when(it.itemId){
-//                id.item_home-> {
-//                    println("home selected")
-//                    Navigation.findNavController(this, R.id.fragmentContainerView)
-//                        .navigate(R.id.action_global_homeFragment)
-//                }
-//                id.item_setting-> {
-//                    println("setting selected")
-//                    Navigation.findNavController(this, R.id.fragmentContainerView)
-//                        .navigate(R.id.action_global_settingFragment)
-//                }
-//                id.item_profile-> {
-//                    println("profile selected")
-//                    Navigation.findNavController(this, R.id.fragmentContainerView)
-//                        .navigate(R.id.action_global_profileFragment)
-//                }
-//            }
-//            true
-//        }
+            override fun onTabUnselected(tab: TabLayout.Tab) {}
+            override fun onTabReselected(tab: TabLayout.Tab) {}
+        })
     }
 
-    private fun setCurrentFragment(fragment:Fragment)=
-        supportFragmentManager.beginTransaction().apply {
-            replace(R.id.fragmentContainerView,fragment)
-            commit()
-        }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
-            true
-        } else super.onOptionsItemSelected(item)
-    }
 
 
 
@@ -147,19 +109,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener,
     override fun onClick(view: View?) {
 
 
-    }
-
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.item_setting -> {
-                println("setting selected")
-                Navigation.findNavController(this, R.id.fragmentContainerView)
-                    .navigate(R.id.action_global_settingFragment)
-            }
-        }
-
-        binding.drawerLayout.closeDrawer(GravityCompat.START)
-        return true
     }
 
 
