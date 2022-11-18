@@ -19,43 +19,15 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
         setContentView(view)
         println("Activity : onCreate")
 
-        setupBottomSheet()
+        setupCustomDialog()
 
 
     }
 
-
-    private fun setupBottomSheet() {
-        binding.buttonBottomSheet.setOnClickListener {
-
-            // on below line we are creating a new bottom sheet dialog.
-            val dialog = BottomSheetDialog(this)
-
-            // on below line we are inflating a layout file which we have created.
-            val view = layoutInflater.inflate(R.layout.bottom_sheet, null)
-
-            // on below line we are creating a variable for our button
-            // which we are using to dismiss our dialog.
-            val btnClose = view.findViewById<Button>(R.id.buttonDismiss)
-
-            // on below line we are adding on click listener
-            // for our dismissing the dialog button.
-            btnClose.setOnClickListener {
-                // on below line we are calling a dismiss
-                // method to close our dialog.
-                dialog.dismiss()
-            }
-            // below line is use to set cancelable to avoid
-            // closing of dialog box when clicking on the screen.
-            dialog.setCancelable(false)
-
-            // on below line we are setting
-            // content view to our view.
-            dialog.setContentView(view)
-
-            // on below line we are calling
-            // a show method to display a dialog.
-            dialog.show()
+    private fun setupCustomDialog() {
+        binding.buttonCustomDialog.setOnClickListener {
+            CustomDialog.newInstance(getString(R.string.dialog_heading), getString(R.string.dialog_description))
+                .show(supportFragmentManager, CustomDialog.TAG)
         }
     }
 
