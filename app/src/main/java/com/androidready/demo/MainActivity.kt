@@ -1,33 +1,16 @@
 package com.androidready.demo
 
 import android.annotation.SuppressLint
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.MenuItem
 import android.view.View
-import android.view.ViewGroupOverlay
-import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.core.view.GravityCompat
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE
-import androidx.fragment.app.FragmentOnAttachListener
-import androidx.fragment.app.FragmentTransaction
-import androidx.navigation.Navigation
-import com.androidready.demo.R.*
-import com.androidready.demo.adapters.MyAdapter
+import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
 import com.androidready.demo.databinding.ActivityMainBinding
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.navigation.NavigationView
-import com.google.android.material.tabs.TabLayout
+import com.google.android.material.bottomsheet.BottomSheetDialog
 
 class MainActivity : AppCompatActivity(), View.OnClickListener{
 
-    private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
     private lateinit var binding: ActivityMainBinding
-    val fragmentManager = supportFragmentManager
-    private lateinit var fragmentTransaction: FragmentTransaction
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,36 +19,45 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
         setContentView(view)
         println("Activity : onCreate")
 
+        setupBottomSheet()
 
-
-
-        setupTabLayout()
 
     }
 
-    private fun setupTabLayout() {
 
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Home"))
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Profile"))
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Setting"))
-        binding.tabLayout.tabGravity = TabLayout.GRAVITY_FILL
+    private fun setupBottomSheet() {
+        binding.buttonBottomSheet.setOnClickListener {
 
-        val adapter = MyAdapter(this, supportFragmentManager,
-            binding.tabLayout.tabCount)
+            // on below line we are creating a new bottom sheet dialog.
+            val dialog = BottomSheetDialog(this)
 
-        binding.viewPager.adapter = adapter
-        binding.viewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(binding.tabLayout))
+            // on below line we are inflating a layout file which we have created.
+            val view = layoutInflater.inflate(R.layout.bottom_sheet, null)
 
-        binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab) {
-                binding.viewPager.currentItem = tab.position
+            // on below line we are creating a variable for our button
+            // which we are using to dismiss our dialog.
+            val btnClose = view.findViewById<Button>(R.id.buttonDismiss)
+
+            // on below line we are adding on click listener
+            // for our dismissing the dialog button.
+            btnClose.setOnClickListener {
+                // on below line we are calling a dismiss
+                // method to close our dialog.
+                dialog.dismiss()
             }
-            override fun onTabUnselected(tab: TabLayout.Tab) {}
-            override fun onTabReselected(tab: TabLayout.Tab) {}
-        })
+            // below line is use to set cancelable to avoid
+            // closing of dialog box when clicking on the screen.
+            dialog.setCancelable(false)
+
+            // on below line we are setting
+            // content view to our view.
+            dialog.setContentView(view)
+
+            // on below line we are calling
+            // a show method to display a dialog.
+            dialog.show()
+        }
     }
-
-
 
 
     override fun onStart() {
