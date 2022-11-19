@@ -7,21 +7,22 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
 import android.view.View
-import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.androidready.demo.databinding.ActivityMainBinding
-import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.bumptech.glide.Glide
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
+import timber.log.Timber
 
 class MainActivity : AppCompatActivity(), View.OnClickListener{
 
     private lateinit var binding: ActivityMainBinding
+    //private val TAG = MainActivity::class.java.simpleName
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,8 +33,43 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
 
         binding.buttonRequestPermission.setOnClickListener(View.OnClickListener {
             requestPermissions()
+            Utils.showGlobalLog("Request Permission Clicked")
         })
 
+        setupGlide()
+        setupCircleImageView()
+
+    }
+
+    private fun setupCircleImageView() {
+        binding.buttonCircleImage.setOnClickListener(View.OnClickListener {
+            loadCircleImage()
+            Timber.d("Circle Image is clicked")
+        })
+    }
+
+    private fun loadCircleImage() {
+        val url = "https://picsum.photos/300/300"
+        Glide.with(this).load(url).into(binding.circleImageView)
+    }
+
+    private fun setupGlide() {
+        binding.buttonLoadImage.setOnClickListener(View.OnClickListener {
+            loadImage()
+        })
+    }
+
+    private fun loadImage() {
+        var url: String? = null
+
+        //url = "https://picsum.photos/500/300"
+
+        if(url == null){
+            Timber.e("Could Not Load Image, Url null")
+            Glide.with(this).load(R.drawable.placeholder_image).into(binding.imageView)
+        }else{
+            Glide.with(this).load(url).into(binding.imageView)
+        }
     }
 
     private fun requestPermissions() {
@@ -148,3 +184,5 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
 
 
 }
+
+
