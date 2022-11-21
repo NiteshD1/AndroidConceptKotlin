@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.SystemClock
 import android.provider.Settings
 import android.view.View
 import android.widget.Toast
@@ -25,7 +26,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
     private lateinit var thread: Thread
     private lateinit var thread1: Thread
 
+    private lateinit var backgroundThread: BackgroundThread
+
     var isThreadRunning = false
+    var isThreadRunning1 = false
+
     var threadCounter = 0
     var threadCounter1 = 0
 
@@ -36,6 +41,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
         setContentView(view)
         println("Activity : onCreate")
 
+        backgroundThread = BackgroundThread()
+        backgroundThread.start()
+
         setupThread()
         setupThread1()
 
@@ -43,48 +51,75 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
 
     private fun setupThread() {
 
-        thread = Thread(Runnable {
-            while (isThreadRunning){
+        val runnable:Runnable = Runnable {
+            while (isThreadRunning) {
                 threadCounter += 1
 
                 runOnUiThread {
                     binding.textViewThread.text = "Thread Running : $threadCounter"
                 }
-                Thread.sleep(1000)
+                SystemClock.sleep(1000)
             }
-        })
+        }
+//        thread = Thread(Runnable {
+//            while (isThreadRunning){
+//                threadCounter += 1
+//
+//                runOnUiThread {
+//                    binding.textViewThread.text = "Thread Running : $threadCounter"
+//                }
+//                Thread.sleep(1000)
+//            }
+//        })
 
 
         binding.buttonStartThread.setOnClickListener(View.OnClickListener {
             isThreadRunning = true
-            thread.start()
+            //thread.start()
+            backgroundThread.addTaskToMessageQueue(runnable)
         })
 
         binding.buttonStopThread.setOnClickListener(View.OnClickListener {
             isThreadRunning = false
+            backgroundThread.removeTaskFromMessageQueue(runnable)
         })
     }
 
     private fun setupThread1() {
 
-        thread1 = Thread(Runnable {
-            while (isThreadRunning){
+        val runnable:Runnable = Runnable {
+            while (isThreadRunning1) {
                 threadCounter1 += 1
 
                 runOnUiThread {
                     binding.textViewThread1.text = "Thread 1 Running : $threadCounter1"
                 }
-                Thread.sleep(1000)
+                SystemClock.sleep(1000)
             }
-        })
+        }
+
+//        thread1 = Thread(Runnable {
+//            while (isThreadRunning){
+//                threadCounter1 += 1
+//
+//                runOnUiThread {
+//                    binding.textViewThread1.text = "Thread 1 Running : $threadCounter1"
+//                }
+//                Thread.sleep(1000)
+//            }
+//        })
 
         binding.buttonStartThread1.setOnClickListener(View.OnClickListener {
-            isThreadRunning = true
-            thread1.start()
+            isThreadRunning1 = true
+            //thread1.start()
+            backgroundThread.addTaskToMessageQueue(runnable)
+
         })
 
         binding.buttonStopThread1.setOnClickListener(View.OnClickListener {
-            isThreadRunning = false
+            isThreadRunning1 = false
+            backgroundThread.removeTaskFromMessageQueue(runnable)
+
         })
     }
 
