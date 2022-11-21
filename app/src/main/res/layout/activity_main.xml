@@ -26,44 +26,60 @@
             android:orientation="vertical">
 
             <Button
-                android:id="@+id/buttonRequestPermission"
+                android:id="@+id/buttonStartThread"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_medium"
-                android:text="Request Permission"
+                android:text="Start Thread"
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.23000002" />
+            <Button
+                android:id="@+id/buttonStopThread"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_medium"
+                android:text="Stop Thread"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.23000002" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textViewThread"
+                android:textStyle="bold"
+                android:layout_marginTop="16dp"
+                android:text="Thread Not Started"
+                android:gravity="center"
+                android:textSize="24dp"
+                android:fontFamily="@font/roboto_medium"/>
 
             <Button
-                android:id="@+id/buttonLoadImage"
+                android:id="@+id/buttonStartThread1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_medium"
-                android:text="Load Image"
+                android:text="Start Thread 1"
+                android:layout_marginTop="48dp"
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.23000002" />
-
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="match_parent"
-                android:layout_height="260dp"
-                android:layout_marginVertical="8dp"
-                android:contentDescription="Image" />
-
             <Button
-                android:id="@+id/buttonCircleImage"
+                android:id="@+id/buttonStopThread1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_medium"
-                android:text="Load Circle Image"
+                android:text="Stop Thread 1"
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -71,15 +87,16 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.23000002" />
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:id="@+id/circleImageView"
-                android:src="@drawable/placeholder_image"
-                android:layout_gravity="center"
-                android:layout_marginVertical="8dp"
-                app:civ_border_color="@color/design_default_color_primary"
-                app:civ_border_width="1dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textViewThread1"
+                android:textStyle="bold"
+                android:layout_marginTop="16dp"
+                android:text="Thread 1 Not Started"
+                android:gravity="center"
+                android:textSize="24dp"
+                android:fontFamily="@font/roboto_medium"/>
         </LinearLayout>
 
     </ScrollView>
