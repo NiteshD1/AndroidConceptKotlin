@@ -26,11 +26,11 @@
             android:orientation="vertical">
 
             <Button
-                android:id="@+id/buttonStartThread"
+                android:id="@+id/buttonStartCoroutine"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_medium"
-                android:text="Start Thread"
+                android:text="Start Coroutine"
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -38,11 +38,11 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.23000002" />
             <Button
-                android:id="@+id/buttonStopThread"
+                android:id="@+id/buttonStopCoroutine"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_medium"
-                android:text="Stop Thread"
+                android:text="Stop Coroutine"
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -56,17 +56,17 @@
                 android:id="@+id/textViewThread"
                 android:textStyle="bold"
                 android:layout_marginTop="16dp"
-                android:text="Thread Not Started"
+                android:text="Coroutine Not Started"
                 android:gravity="center"
                 android:textSize="24dp"
                 android:fontFamily="@font/roboto_medium"/>
 
             <Button
-                android:id="@+id/buttonStartThread1"
+                android:id="@+id/buttonStartCoroutine1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_medium"
-                android:text="Start Thread 1"
+                android:text="Start Coroutine 1"
                 android:layout_marginTop="48dp"
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -75,11 +75,11 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.23000002" />
             <Button
-                android:id="@+id/buttonStopThread1"
+                android:id="@+id/buttonStopCoroutine1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_medium"
-                android:text="Stop Thread 1"
+                android:text="Stop Coroutine 1"
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -93,10 +93,24 @@
                 android:id="@+id/textViewThread1"
                 android:textStyle="bold"
                 android:layout_marginTop="16dp"
-                android:text="Thread 1 Not Started"
+                android:text="Coroutine 1 Not Started"
                 android:gravity="center"
                 android:textSize="24dp"
                 android:fontFamily="@font/roboto_medium"/>
+
+            <Button
+                android:id="@+id/buttonStartActivity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_medium"
+                android:text="Start Test Activity"
+                android:textColor="@color/white"
+                android:layout_marginTop="24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.23000002" />
         </LinearLayout>
 
     </ScrollView>

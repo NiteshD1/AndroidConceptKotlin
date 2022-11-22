@@ -1,38 +1,24 @@
 package com.androidready.demo
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.os.SystemClock
-import android.provider.Settings
 import android.view.View
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.androidready.demo.databinding.ActivityMainBinding
-import com.bumptech.glide.Glide
-import com.karumi.dexter.Dexter
-import com.karumi.dexter.MultiplePermissionsReport
-import com.karumi.dexter.PermissionToken
-import com.karumi.dexter.listener.PermissionRequest
-import com.karumi.dexter.listener.multi.MultiplePermissionsListener
-import timber.log.Timber
+import kotlinx.coroutines.*
 
 class MainActivity : AppCompatActivity(), View.OnClickListener{
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var thread: Thread
-    private lateinit var thread1: Thread
+    private lateinit var job: Job
 
-    private lateinit var backgroundThread: BackgroundThread
 
     var isThreadRunning = false
     var isThreadRunning1 = false
 
-    var threadCounter = 0
-    var threadCounter1 = 0
+    var counter = 0
+    var counter1 = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,86 +27,139 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
         setContentView(view)
         println("Activity : onCreate")
 
-        backgroundThread = BackgroundThread()
-        backgroundThread.start()
+        //coroutineDemo()
+        //setupCoroutine()
+        //setupCoroutine1()
 
-        setupThread()
-        setupThread1()
+
+        binding.buttonStartActivity.setOnClickListener(View.OnClickListener {
+            startActivity(Intent(this,TestActivity::class.java))
+            finish()
+        })
+
+        //dispatcherDemo()
+
+        //asyncDemo()
+        runBlockingDemo()
+    }
+
+    private fun runBlockingDemo() {
+        runBlocking {
+            delay(5000)
+            println("runBlocking Called")
+        }
+    }
+
+    private fun asyncDemo() {
+        GlobalScope.launch(Dispatchers.Main) {
+            val serverData = async { recieveDataFromServer() }
+            println(serverData.await())
+        }
+    }
+
+    suspend fun recieveDataFromServer(): String {
+          delay(1000)
+          return "Data Received From Server"
+    }
+
+    private fun dispatcherDemo() {
+//        GlobalScope.launch(Dispatchers.Main) {
+//            fetchDataFromServer()
+//        }
+
+        GlobalScope.launch(Dispatchers.IO) {
+            fetchDataFromServer()
+        }
+
+//        GlobalScope.launch(Dispatchers.Default) {
+//            fetchDataFromServer()
+//        }
+    }
+
+    private fun coroutineDemo() {
+        GlobalScope.launch {
+            fetchDataFromServer()
+
+        }
+
+//        lifecycleScope.launch {
+//            fetchDataFromServer()
+//        }
 
     }
 
-    private fun setupThread() {
+    suspend fun fetchDataFromServer(){
+        println("fetching data from server...")
 
-        val runnable:Runnable = Runnable {
-            while (isThreadRunning) {
-                threadCounter += 1
+        // to show that global scope still working after changing activity
+        while (true){
+            counter += 1
+            println("fetching data from server... $counter")
 
-                runOnUiThread {
-                    binding.textViewThread.text = "Thread Running : $threadCounter"
-                }
-                SystemClock.sleep(1000)
-            }
+            // what happens if I Use main activity objet
+            binding.textViewThread.text = "Coroutine Running : $counter"
+
+            delay(1000)
         }
-//        thread = Thread(Runnable {
-//            while (isThreadRunning){
+    }
+
+    suspend fun startCoroutine(){
+        while (isThreadRunning) {
+            counter += 1
+            binding.textViewThread.text = "Coroutine Running : $counter"
+            delay(1000)
+        }
+    }
+
+    suspend fun startCoroutine1(){
+        while (true) {
+            counter1 += 1
+            binding.textViewThread1.text = "Coroutine 1 Running : $counter1"
+            delay(1000)
+        }
+    }
+
+    private fun setupCoroutine() {
+
+
+
+//        val runnable:Runnable = Runnable {
+//            while (isThreadRunning) {
 //                threadCounter += 1
 //
 //                runOnUiThread {
 //                    binding.textViewThread.text = "Thread Running : $threadCounter"
 //                }
-//                Thread.sleep(1000)
+//                SystemClock.sleep(1000)
 //            }
-//        })
+//        }
 
-
-        binding.buttonStartThread.setOnClickListener(View.OnClickListener {
-            isThreadRunning = true
-            //thread.start()
-            backgroundThread.addTaskToMessageQueue(runnable)
+        binding.buttonStartCoroutine.setOnClickListener(View.OnClickListener {
+            GlobalScope.launch {
+                isThreadRunning = true
+                startCoroutine()
+                //startCoroutine1() calling it for showing sequential call in coroutine
+                val job = launch { startCoroutine() }
+            }
         })
 
-        binding.buttonStopThread.setOnClickListener(View.OnClickListener {
+        binding.buttonStopCoroutine.setOnClickListener(View.OnClickListener {
             isThreadRunning = false
-            backgroundThread.removeTaskFromMessageQueue(runnable)
         })
     }
 
-    private fun setupThread1() {
+    private fun setupCoroutine1() {
 
-        val runnable:Runnable = Runnable {
-            while (isThreadRunning1) {
-                threadCounter1 += 1
-
-                runOnUiThread {
-                    binding.textViewThread1.text = "Thread 1 Running : $threadCounter1"
-                }
-                SystemClock.sleep(1000)
+        binding.buttonStartCoroutine1.setOnClickListener(View.OnClickListener {
+            GlobalScope.launch {
+                job = launch { startCoroutine1() }
             }
-        }
-
-//        thread1 = Thread(Runnable {
-//            while (isThreadRunning){
-//                threadCounter1 += 1
-//
-//                runOnUiThread {
-//                    binding.textViewThread1.text = "Thread 1 Running : $threadCounter1"
-//                }
-//                Thread.sleep(1000)
-//            }
-//        })
-
-        binding.buttonStartThread1.setOnClickListener(View.OnClickListener {
-            isThreadRunning1 = true
-            //thread1.start()
-            backgroundThread.addTaskToMessageQueue(runnable)
-
         })
 
-        binding.buttonStopThread1.setOnClickListener(View.OnClickListener {
-            isThreadRunning1 = false
-            backgroundThread.removeTaskFromMessageQueue(runnable)
-
+        binding.buttonStopCoroutine1.setOnClickListener(View.OnClickListener {
+              job.cancel()
         })
+
     }
 
     override fun onStart() {
