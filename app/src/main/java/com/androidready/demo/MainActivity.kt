@@ -26,10 +26,21 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
     }
 
     private fun retrofitDemo() {
-        GlobalScope.launch {
-            var productList = RetrofitInstance.api.getProductList()
-            delay(2000)
-            println("Product List : " + productList.toString())
+        GlobalScope.launch(Dispatchers.IO) {
+            var responseProductList = RetrofitInstance.api.getProductList()
+            //delay(2000)
+
+            if(responseProductList.isSuccessful){
+                responseProductList.body().let { productList ->
+                    productList?.forEach {
+                        println("Product Data : ${it.toString()}")
+                    }
+                }
+            }else{
+                responseProductList.errorBody().let {
+                    println("Product List could not be fetched" + it.toString())
+                }
+            }
         }
     }
 
