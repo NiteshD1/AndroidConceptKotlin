@@ -21,34 +21,8 @@
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center"
             android:layout_margin="16dp"
             android:orientation="vertical">
-
-            <Button
-                android:id="@+id/buttonStartCoroutine"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_medium"
-                android:text="Start Coroutine"
-                android:textColor="@color/white"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.23000002" />
-            <Button
-                android:id="@+id/buttonStopCoroutine"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_medium"
-                android:text="Stop Coroutine"
-                android:textColor="@color/white"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.23000002" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -56,61 +30,31 @@
                 android:id="@+id/textViewThread"
                 android:textStyle="bold"
                 android:layout_marginTop="16dp"
-                android:text="Coroutine Not Started"
+                android:text="Retrofit Demo"
                 android:gravity="center"
                 android:textSize="24dp"
                 android:fontFamily="@font/roboto_medium"/>
 
             <Button
-                android:id="@+id/buttonStartCoroutine1"
+                android:id="@+id/buttonFetchData"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_medium"
-                android:text="Start Coroutine 1"
-                android:layout_marginTop="48dp"
-                android:textColor="@color/white"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.23000002" />
-            <Button
-                android:id="@+id/buttonStopCoroutine1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_medium"
-                android:text="Stop Coroutine 1"
-                android:textColor="@color/white"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.23000002" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/textViewThread1"
-                android:textStyle="bold"
                 android:layout_marginTop="16dp"
-                android:text="Coroutine 1 Not Started"
-                android:gravity="center"
-                android:textSize="24dp"
-                android:fontFamily="@font/roboto_medium"/>
-
-            <Button
-                android:id="@+id/buttonStartActivity"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_medium"
-                android:text="Start Test Activity"
+                android:text="Fetch Product Data"
                 android:textColor="@color/white"
-                android:layout_marginTop="24dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.23000002" />
+
+
+            <ListView
+                android:id="@+id/listView"
+                android:layout_marginTop="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="550dp" />
         </LinearLayout>
 
     </ScrollView>
