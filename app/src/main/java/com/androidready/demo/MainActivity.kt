@@ -1,16 +1,16 @@
 package com.androidready.demo
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
-import android.widget.ListAdapter
 import androidx.appcompat.app.AppCompatActivity
+import androidx.work.*
 import com.androidready.demo.api.RetrofitInstance
 import com.androidready.demo.databinding.ActivityMainBinding
-import com.androidready.demo.models.Product
+import com.androidready.demo.worker.BackgroundTaskWorker
 import kotlinx.coroutines.*
+import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity(), View.OnClickListener{
 
@@ -24,9 +24,41 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
         setContentView(view)
         println("Activity : onCreate")
 
+        binding.buttonStartWorkManager.setOnClickListener(View.OnClickListener {
+            startWorkManager()
+        })
+
+        binding.buttonStopWorkManager.setOnClickListener(View.OnClickListener {
+            stopWorkManager()
+        })
         binding.buttonFetchData.setOnClickListener(View.OnClickListener {
             retrofitDemo()
         })
+    }
+
+    private fun stopWorkManager() {
+        WorkManager.getInstance(MainApplication.appContext).cancelAllWorkByTag("worker")
+    }
+
+    private fun startWorkManager() {
+
+//        val constraints = Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
+//        val oneTimeRequest = OneTimeWorkRequestBuilder<BackgroundTaskWorker>()
+//            .setConstraints(constraints)
+//            .addTag("worker")
+//            .setInitialDelay(10,TimeUnit.SECONDS)
+//            .build()
+//
+//        WorkManager.getInstance(MainApplication.appContext).enqueue(oneTimeRequest)
+
+        val constraints = Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
+        val oneTimeRequest = PeriodicWorkRequestBuilder<BackgroundTaskWorker>(10,TimeUnit.SECONDS)
+            .setConstraints(constraints)
+            .addTag("worker")
+            .setInitialDelay(10,TimeUnit.SECONDS)
+            .build()
+
+        WorkManager.getInstance(MainApplication.appContext).enqueue(oneTimeRequest)
     }
 
     private fun retrofitDemo() {

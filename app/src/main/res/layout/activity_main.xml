@@ -34,13 +34,39 @@
                 android:gravity="center"
                 android:textSize="24dp"
                 android:fontFamily="@font/roboto_medium"/>
+            <Button
+                android:id="@+id/buttonStartWorkManager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_medium"
+                android:layout_marginTop="16dp"
+                android:text="Start Work Manager"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.23000002" />
+            <Button
+                android:id="@+id/buttonStopWorkManager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_medium"
+                android:layout_marginTop="16dp"
+                android:text="Stop Work Manager"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.23000002" />
 
             <Button
                 android:id="@+id/buttonFetchData"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_medium"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:text="Fetch Product Data"
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -50,11 +76,12 @@
                 app:layout_constraintVertical_bias="0.23000002" />
 
 
+
             <ListView
                 android:id="@+id/listView"
                 android:layout_marginTop="16dp"
                 android:layout_width="match_parent"
-                android:layout_height="550dp" />
+                android:layout_height="400dp" />
         </LinearLayout>
 
     </ScrollView>
