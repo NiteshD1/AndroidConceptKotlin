@@ -4,9 +4,12 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.ArrayAdapter
+import android.widget.ListAdapter
 import androidx.appcompat.app.AppCompatActivity
 import com.androidready.demo.api.RetrofitInstance
 import com.androidready.demo.databinding.ActivityMainBinding
+import com.androidready.demo.models.Product
 import kotlinx.coroutines.*
 
 class MainActivity : AppCompatActivity(), View.OnClickListener{
@@ -21,8 +24,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
         setContentView(view)
         println("Activity : onCreate")
 
-        retrofitDemo()
-
+        binding.buttonFetchData.setOnClickListener(View.OnClickListener {
+            retrofitDemo()
+        })
     }
 
     private fun retrofitDemo() {
@@ -32,8 +36,17 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
 
             if(responseProductList.isSuccessful){
                 responseProductList.body().let { productList ->
+                    var mutableListOfProduct : MutableList<String> = mutableListOf()
                     productList?.forEach {
                         println("Product Data : ${it.toString()}")
+                        val productInfo = "Product Id : ${it.id} \nProduct Title : ${it.title} \nProduct Price : ${it.price} \n"
+                        mutableListOfProduct.add(productInfo)
+                    }
+                    mutableListOfProduct.let {
+                        withContext(Dispatchers.Main){
+                            val arrayAdapter = ArrayAdapter(this@MainActivity,android.R.layout.simple_list_item_1,mutableListOfProduct)
+                            binding.listView.adapter = arrayAdapter
+                        }
                     }
                 }
             }else{
@@ -43,6 +56,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
             }
         }
     }
+
+
 
     override fun onStart() {
         super.onStart()
