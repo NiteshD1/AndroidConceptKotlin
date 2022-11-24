@@ -2,13 +2,20 @@ package com.androidready.demo
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.androidready.demo.databinding.ActivityMainBinding
@@ -21,8 +28,12 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 
 class MainActivity : AppCompatActivity(), View.OnClickListener{
 
+    private lateinit var builder: Notification.Builder
+    private lateinit var notificationChannel: NotificationChannel
+    private lateinit var notificationManager: NotificationManager
     private lateinit var binding: ActivityMainBinding
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -34,8 +45,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
             requestPermissions()
         })
 
+        binding.buttonSendNotification.setOnClickListener(View.OnClickListener {
+            addNotification()
+        })
+
     }
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun requestPermissions() {
         // below line is use to request permission in the current activity.
         // this method is use to handle error in runtime permissions
@@ -43,6 +59,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
             // below line is use to request the number of permissions which are required in our app.
             .withPermissions(
                 Manifest.permission.CAMERA,
+                Manifest.permission.POST_NOTIFICATIONS,
                 // below is the list of permissions
                 Manifest.permission.READ_CONTACTS)
             // after adding permissions we are calling an with listener method.
@@ -101,6 +118,25 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
         builder.show()
     }
 
+    private fun addNotification() {
+        val intent = Intent(this, MainActivity::class.java)
+        val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+            notificationChannel =
+                NotificationChannel("123", "this is test Notification", NotificationManager.IMPORTANCE_HIGH)
+            notificationManager.createNotificationChannel(notificationChannel)
+            builder =
+                Notification.Builder(this, "123").setContentTitle("Notification title")
+                    .setContentText("Test Notification")
+                    .setSmallIcon(R.drawable.ic_launcher_foreground)
+                    .setContentIntent(pendingIntent)
+        }
+        notificationManager.notify(12345, builder.build())
+    }
 
 
     override fun onStart() {
