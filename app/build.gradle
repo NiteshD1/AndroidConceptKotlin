@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+
+    id 'kotlin-kapt'
     id("androidx.navigation.safeargs.kotlin")
 }
 
@@ -16,7 +18,9 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-
+    packagingOptions {
+        exclude 'META-INF/atomicfu.kotlin_module'
+    }
     buildTypes {
         release {
             minifyEnabled false
@@ -64,4 +68,12 @@ dependencies {
     // work Manager
     implementation "androidx.work:work-runtime-ktx:2.7.1"
 
+    // Room components
+
+    implementation "androidx.room:room-ktx:2.4.3"
+    kapt "androidx.room:room-compiler:2.4.3"
+    implementation "androidx.room:room-runtime:2.4.3"
+
+    androidTestImplementation "androidx.room:room-testing:2.4.3"
 }
+

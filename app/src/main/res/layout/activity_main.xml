@@ -22,7 +22,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginHorizontal="16dp"
-            android:layout_gravity="center"
             android:orientation="vertical">
 
             <TextView
@@ -31,7 +30,7 @@
                 android:id="@+id/textView"
                 android:textStyle="bold"
                 android:layout_marginTop="16dp"
-                android:text="Welecome!"
+                android:text="Add Product"
                 android:textColor="@color/black"
                 android:gravity="center"
                 android:textSize="24sp"
@@ -40,22 +39,56 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp">
+                android:layout_marginTop="16dp">
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/editTextEmail"
-                    android:hint="Enter your Email"/>
+                    android:id="@+id/editTextId"
+                    android:hint="Enter Product Id"/>
             </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/editTextName"
+                    android:hint="Enter Product Name"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/editTextPrice"
+                    android:hint="Enter Product Price"/>
+            </com.google.android.material.textfield.TextInputLayout>
 
             <Button
-                android:id="@+id/buttonSignUp"
+                android:id="@+id/buttonAddProduct"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/roboto_medium"
-                android:text="Signup Now"
+                android:text="Add Product"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.23000002" />
+            <Button
+                android:id="@+id/buttonDeleteProducts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_medium"
+                android:visibility="visible"
+                android:text="Delete Product"
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -64,13 +97,12 @@
                 app:layout_constraintVertical_bias="0.23000002" />
 
             <Button
-                android:id="@+id/buttonFetchData"
+                android:id="@+id/buttonShowProducts"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_medium"
-                android:layout_marginTop="8dp"
-                android:visibility="gone"
-                android:text="Fetch Product Data"
+                android:visibility="visible"
+                android:text="Show Products"
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -82,7 +114,7 @@
 
             <ListView
                 android:id="@+id/listView"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:layout_marginTop="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="400dp" />

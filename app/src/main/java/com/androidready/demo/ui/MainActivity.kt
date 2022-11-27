@@ -11,6 +11,9 @@ import com.androidready.demo.MainApplication
 import com.androidready.demo.Utils
 import com.androidready.demo.api.RetrofitInstance
 import com.androidready.demo.databinding.ActivityMainBinding
+import com.androidready.demo.db.room.ProductDatabase
+import com.androidready.demo.models.Product
+import com.androidready.demo.models.Rating
 import kotlinx.coroutines.*
 import java.io.*
 
@@ -21,6 +24,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
     val filename = "myfile"
     val externalFileName = "AndroidReadyDemoFile"
     private val externalStorageFilePath = "AndroidReadyFolder"
+    private lateinit var db: ProductDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,64 +32,88 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
         val view = binding.root
         setContentView(view)
         println("Activity : onCreate")
+        db = ProductDatabase(this)
 
 
-//        MainApplication.prefs?.email = "my email"
-//        println(MainApplication.prefs?.email)
-
-        binding.buttonSignUp.setOnClickListener(View.OnClickListener {
-            signUp()
+        binding.buttonAddProduct.setOnClickListener(View.OnClickListener {
+            GlobalScope.launch {
+                val id = binding.editTextId.text.toString().toInt()
+                val name = binding.editTextName.text.toString()
+                val price = binding.editTextPrice.text.toString().toInt()
+                val product = Product(id,name,price)
+                addProductToDb(product)
+            }
         })
 
-        var email = MainApplication.prefs?.email
-        if(email != null){
-            startDashBoardActivity()
-        }
+        binding.buttonShowProducts.setOnClickListener(View.OnClickListener {
+            GlobalScope.launch{
+                showAllProducts()
+            }
+        })
 
-
-    }
-
-    private fun signUp() {
-        if(binding.editTextEmail.text != null){
-            MainApplication.prefs?.email = binding.editTextEmail.text.toString()
-            startDashBoardActivity()
-        }else{
-            Utils.showToast("Enter EMail First!")
-        }
-    }
-
-    private fun startDashBoardActivity() {
-        startActivity(Intent(this,DashBoardActivity::class.java))
-    }
-
-
-    private fun retrofitDemo() {
-        GlobalScope.launch(Dispatchers.IO) {
-            var responseProductList = RetrofitInstance.api.getProductList()
-            //delay(2000)
-
-            if(responseProductList.isSuccessful){
-                responseProductList.body().let { productList ->
-                    var mutableListOfProduct : MutableList<String> = mutableListOf()
-                    productList?.forEach {
-                        println("Product Data : ${it.toString()}")
-                        val productInfo = "Product Id : ${it.id} \nProduct Title : ${it.title} \nProduct Price : ${it.price} \n"
-                        mutableListOfProduct.add(productInfo)
-                    }
-                    mutableListOfProduct.let {
-                        withContext(Dispatchers.Main){
-                            val arrayAdapter = ArrayAdapter(this@MainActivity,android.R.layout.simple_list_item_1,mutableListOfProduct)
-                            binding.listView.adapter = arrayAdapter
-                        }
-                    }
+        binding.buttonDeleteProducts.setOnClickListener(View.OnClickListener {
+            GlobalScope.launch(Dispatchers.IO) {
+                if(binding.editTextId.text.toString().equals("")){
+                    db.getProductDao().deleteAll()
+                }else{
+                    val id = binding.editTextId.text.toString().toInt()
+                    db.getProductDao().deleteById(id)
                 }
-            }else{
-                responseProductList.errorBody().let {
-                    println("Product List could not be fetched" + it.toString())
+                withContext(Dispatchers.Main){
+                    Utils.showToast("Deleted")
                 }
             }
-        }
+
+        })
+
     }
+
+    private suspend fun showAllProducts() {
+         var products = db.getProductDao().getAllProducts()
+
+         products.let {
+             withContext(Dispatchers.Main){
+                            val arrayAdapter = ArrayAdapter(this@MainActivity,android.R.layout.simple_list_item_1,it)
+                            binding.listView.adapter = arrayAdapter
+                        }
+         }
+    }
+
+    private suspend fun addProductToDb(product: Product) {
+           db.getProductDao().upsert(product)
+           withContext(Dispatchers.Main){
+               Utils.showToast("Product Added")
+           }
+    }
+
+
+//    private fun retrofitDemo() {
+//        GlobalScope.launch(Dispatchers.IO) {
+//            var responseProductList = RetrofitInstance.api.getProductList()
+//            //delay(2000)
+//
+//            if(responseProductList.isSuccessful){
+//                responseProductList.body().let { productList ->
+//                    var mutableListOfProduct : MutableList<String> = mutableListOf()
+//                    productList?.forEach {
+//                        println("Product Data : ${it.toString()}")
+//                        val productInfo = "Product Id : ${it.id} \nProduct Title : ${it.title} \nProduct Price : ${it.price} \n"
+//                        mutableListOfProduct.add(productInfo)
+//                    }
+//                    mutableListOfProduct.let {
+//                        withContext(Dispatchers.Main){
+//                            val arrayAdapter = ArrayAdapter(this@MainActivity,android.R.layout.simple_list_item_1,mutableListOfProduct)
+//                            binding.listView.adapter = arrayAdapter
+//                        }
+//                    }
+//                }
+//            }else{
+//                responseProductList.errorBody().let {
+//                    println("Product List could not be fetched" + it.toString())
+//                }
+//            }
+//        }
+//    }
 
 
 
