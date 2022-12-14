@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity(),View.OnClickListener,UpdateActivity {
         //fragmentTransaction.remove(R.id.frameLayout,fragment)
 
         if(fragment is HomeFragment){
-            fragmentManager.popBackStack("home_fragment",POP_BACK_STACK_INCLUSIVE)
+            fragmentManager.popBackStack("home_fragment", POP_BACK_STACK_INCLUSIVE)
             fragmentTransaction.add(id.frameLayout,fragment,"home")
             fragmentTransaction.addToBackStack("home_fragment")
             fragment.setUpdateActivityObject(this)
