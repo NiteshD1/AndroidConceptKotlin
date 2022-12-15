@@ -24,6 +24,9 @@
                 android:name="data"
                 android:defaultValue='"1"' />
         </action>
+        <action
+            android:id="@+id/action_homeFragment_to_secondFragment2"
+            app:destination="@id/secondFragment" />
     </fragment>
     <fragment
         android:id="@+id/firstFragment"
@@ -48,7 +51,9 @@
             app:destination="@id/homeFragment" />
         <deepLink
             android:id="@+id/deepLink"
-            app:uri="www.nd.com" />
+            app:uri="www.nd.com"
+            app:action="android.intent.action.MY_ACTION"
+            app:mimeType="type/subtype"/>
     </fragment>
     <fragment
         android:id="@+id/settingFragment"
