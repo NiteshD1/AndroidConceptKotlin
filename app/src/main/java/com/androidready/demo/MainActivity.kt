@@ -3,9 +3,11 @@ package com.androidready.demo
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroupOverlay
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
@@ -34,6 +36,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener,
         setContentView(view)
         println("Activity : onCreate")
 
+        supportActionBar?.title = "Android Kotlin"
 
         actionBarDrawerToggle =
             ActionBarDrawerToggle(this, binding.drawerLayout, string.nav_open, string.nav_close)
@@ -51,10 +54,34 @@ class MainActivity : AppCompatActivity(), View.OnClickListener,
 
     }
 
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu, menu)
+        return true
+    }
+
+
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
             true
-        } else super.onOptionsItemSelected(item)
+        } else{
+            return when (item.itemId) {
+                R.id.item_home -> {
+                    Toast.makeText(applicationContext, "Home Clicked", Toast.LENGTH_LONG).show()
+                    true
+                }
+                R.id.item_setting ->{
+                    Toast.makeText(applicationContext, "Setting Clicked", Toast.LENGTH_LONG).show()
+                    return true
+                }
+                R.id.item_logout ->{
+                    Toast.makeText(applicationContext, "Logout Clicked", Toast.LENGTH_LONG).show()
+                    return true
+                }
+                else -> super.onOptionsItemSelected(item)
+            }
+        }
     }
 
 
@@ -108,6 +135,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener,
                 println("setting selected")
                 Navigation.findNavController(this, R.id.fragmentContainerView)
                     .navigate(R.id.action_global_settingFragment)
+            }
+            R.id.item_home -> {
+                println("Home selected")
+                Navigation.findNavController(this, R.id.fragmentContainerView)
+                    .navigate(R.id.action_global_homeFragment)
             }
         }
 
