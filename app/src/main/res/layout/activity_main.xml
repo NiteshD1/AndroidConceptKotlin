@@ -16,6 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:tabTextColor="@color/white"
+            app:tabGravity="fill"
             app:tabSelectedTextColor="@color/black"
             android:background="@color/design_default_color_primary"
             app:layout_constraintEnd_toEndOf="parent"

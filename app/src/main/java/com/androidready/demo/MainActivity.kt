@@ -48,7 +48,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener,TabLayout.OnTabSe
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Home"))
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Profile"))
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Setting"))
-        binding.tabLayout.tabGravity = TabLayout.GRAVITY_FILL
 
         val adapter = MyAdapter(this, supportFragmentManager,
             binding.tabLayout.tabCount)
