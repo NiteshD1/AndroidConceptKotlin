@@ -120,8 +120,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener,
     override fun onBackPressed() {
         //fragmentManager.popBackStack()
 
-
-        super.onBackPressed()
+        if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            binding.drawerLayout.closeDrawer(GravityCompat.START)
+        } else {
+            super.onBackPressed()
+        }
     }
 
     override fun onClick(view: View?) {
