@@ -21,7 +21,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.tabs.TabLayout
 
-class MainActivity : AppCompatActivity(), View.OnClickListener{
+class MainActivity : AppCompatActivity(), View.OnClickListener,TabLayout.OnTabSelectedListener{
 
     private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
     private lateinit var binding: ActivityMainBinding
@@ -56,13 +56,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
         binding.viewPager.adapter = adapter
         binding.viewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(binding.tabLayout))
 
-        binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab) {
-                binding.viewPager.currentItem = tab.position
-            }
-            override fun onTabUnselected(tab: TabLayout.Tab) {}
-            override fun onTabReselected(tab: TabLayout.Tab) {}
-        })
+        binding.tabLayout.addOnTabSelectedListener(this)
     }
 
 
@@ -108,6 +102,20 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
 
     override fun onClick(view: View?) {
 
+
+    }
+
+    override fun onTabSelected(tab: TabLayout.Tab?) {
+        if (tab != null) {
+            binding.viewPager.currentItem = tab.position
+        }
+    }
+
+    override fun onTabUnselected(tab: TabLayout.Tab?) {
+
+    }
+
+    override fun onTabReselected(tab: TabLayout.Tab?) {
 
     }
 
