@@ -25,7 +25,7 @@ class MyAdapter(
             2 -> {
                 SettingFragment()
             }
-            else -> getItem(position)
+            else -> HomeFragment()
         }
     }
     override fun getCount(): Int {
