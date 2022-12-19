@@ -46,7 +46,7 @@ class CustomDialog : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupView(view)
+        setupView()
         setupClickListeners(view)
     }
 
@@ -58,7 +58,7 @@ class CustomDialog : DialogFragment() {
         )
     }
 
-    private fun setupView(view: View) {
+    private fun setupView() {
         binding.textViewHeading.text = arguments?.getString(KEY_TITLE)
         binding.textViewDescription.text = arguments?.getString(KEY_DESCRIPTION)
     }
