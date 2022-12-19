@@ -26,7 +26,6 @@
             android:id="@+id/buttonCustomDialog"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/roboto_medium"
             android:text="Show Custom Dialog"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"

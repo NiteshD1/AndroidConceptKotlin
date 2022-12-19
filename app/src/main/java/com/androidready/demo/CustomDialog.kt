@@ -8,9 +8,12 @@ import android.view.WindowManager
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
+import com.androidready.demo.databinding.ActivityMainBinding
+import com.androidready.demo.databinding.LayoutCustomDialogBinding
 
 
 class CustomDialog : DialogFragment() {
+    private lateinit var binding: LayoutCustomDialogBinding
 
     companion object {
 
@@ -35,7 +38,10 @@ class CustomDialog : DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.layout_custom_dialog, container, false)
+
+        binding = LayoutCustomDialogBinding.inflate(inflater, container, false)
+
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -53,26 +59,19 @@ class CustomDialog : DialogFragment() {
     }
 
     private fun setupView(view: View) {
-        val textViewHeading : TextView = view.findViewById(R.id.textViewHeading)
-        val textViewDescription : TextView = view.findViewById(R.id.textViewDescription)
-
-        textViewHeading.text = arguments?.getString(KEY_TITLE)
-        textViewDescription.text = arguments?.getString(KEY_DESCRIPTION)
+        binding.textViewHeading.text = arguments?.getString(KEY_TITLE)
+        binding.textViewDescription.text = arguments?.getString(KEY_DESCRIPTION)
     }
 
     private fun setupClickListeners(view: View) {
-        val buttonYes : Button = view.findViewById(R.id.buttonYes)
-        val buttonCancel : Button = view.findViewById(R.id.buttonCancel)
 
-
-        buttonYes.setOnClickListener {
-
+        binding.buttonYes.setOnClickListener {
             Utils.showToast("Transaction is processing...")
             dismiss()
         }
-        buttonCancel.setOnClickListener {
-            Utils.showToast("Transaction failed!")
 
+        binding.buttonCancel.setOnClickListener {
+            Utils.showToast("Transaction failed!")
             dismiss()
         }
     }
