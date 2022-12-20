@@ -41,21 +41,23 @@ class CustomDialog : DialogFragment() {
 
         binding = LayoutCustomDialogBinding.inflate(inflater, container, false)
 
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        dialog?.window?.setLayout(
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.WRAP_CONTENT
+        )
         setupView()
         setupClickListeners(view)
     }
 
     override fun onStart() {
         super.onStart()
-        dialog?.window?.setLayout(
-            WindowManager.LayoutParams.MATCH_PARENT,
-            WindowManager.LayoutParams.WRAP_CONTENT
-        )
+
     }
 
     private fun setupView() {
