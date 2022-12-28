@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.SystemClock
 import android.provider.Settings
 import android.view.View
 import android.widget.Toast
@@ -43,8 +44,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
 
     private fun setupThread() {
 
-        thread = Thread(Runnable {
-            while (isThreadRunning){
+        thread = Thread {
+
+            while (isThreadRunning) {
                 threadCounter += 1
 
                 runOnUiThread {
@@ -52,7 +54,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
                 }
                 Thread.sleep(1000)
             }
-        })
+        }
 
 
         binding.buttonStartThread.setOnClickListener(View.OnClickListener {
@@ -67,8 +69,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
 
     private fun setupThread1() {
 
-        thread1 = Thread(Runnable {
-            while (isThreadRunning){
+        thread1 = Thread {
+            while (isThreadRunning) {
                 threadCounter1 += 1
 
                 runOnUiThread {
@@ -76,7 +78,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
                 }
                 Thread.sleep(1000)
             }
-        })
+        }
 
         binding.buttonStartThread1.setOnClickListener(View.OnClickListener {
             isThreadRunning = true
