@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
     private fun loadImage() {
         var url: String? = null
 
-        //url = "https://picsum.photos/500/300"
+        url = "https://picsum.photos/500/300"
 
         if(url == null){
             Timber.e("Could Not Load Image, Url null")
