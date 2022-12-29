@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
                 threadCounter += 1
 
                 runOnUiThread {
-                    binding.textViewThread.text = "Thread Running : $threadCounter"
+                    binding.textViewThread.text = threadCounter.toString()
                 }
                 Thread.sleep(1000)
             }

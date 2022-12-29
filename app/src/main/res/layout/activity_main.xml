@@ -29,7 +29,7 @@
                 android:id="@+id/buttonStartThread"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Start Thread"
+                android:text="Start"
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -40,7 +40,7 @@
                 android:id="@+id/buttonStopThread"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Stop Thread"
+                android:text="Stop"
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -54,9 +54,9 @@
                 android:id="@+id/textViewThread"
                 android:textStyle="bold"
                 android:layout_marginTop="16dp"
-                android:text="Thread Not Started"
+                android:text="0"
                 android:gravity="center"
-                android:textSize="24dp"
+                android:textSize="32sp"
                 />
 
             <Button
