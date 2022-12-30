@@ -61,6 +61,17 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
                 SystemClock.sleep(1000)
             }
         }
+
+        val runnable1:Runnable = Runnable {
+            while (isThreadRunning1) {
+                threadCounter += 5
+
+                runOnUiThread {
+                    binding.textViewThread.text = "Thread Running : $threadCounter"
+                }
+                SystemClock.sleep(1000)
+            }
+        }
 //        thread = Thread(Runnable {
 //            while (isThreadRunning){
 //                threadCounter += 1
@@ -75,8 +86,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
 
         binding.buttonStartThread.setOnClickListener(View.OnClickListener {
             isThreadRunning = true
+            isThreadRunning1 = true
+
             //thread.start()
             backgroundThread.addTaskToMessageQueue(runnable)
+            backgroundThread.addTaskToMessageQueue(runnable1)
         })
 
         binding.buttonStopThread.setOnClickListener(View.OnClickListener {

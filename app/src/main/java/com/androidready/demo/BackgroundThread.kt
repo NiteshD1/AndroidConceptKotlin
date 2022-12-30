@@ -7,22 +7,23 @@ import android.os.Looper
 
 class BackgroundThread : Thread() {
 
-    private lateinit var handler: Handler
+    private var handler: Handler? = null
     override fun run() {
         super.run()
 
         Looper.prepare()
-        handler = Looper.myLooper()?.let { Handler(it) }!!
+
+        handler = Looper.myLooper()?.let { Handler(it)}
 
         //handler = Handler(Looper.getMainLooper())
         Looper.loop()
     }
 
     fun addTaskToMessageQueue(runnable: Runnable){
-        handler.post(runnable)
+        handler?.post(runnable)
     }
 
     fun removeTaskFromMessageQueue(runnable: Runnable){
-        handler.removeCallbacks(runnable)
+        handler?.removeCallbacks(runnable)
     }
 }
