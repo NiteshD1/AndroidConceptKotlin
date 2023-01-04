@@ -29,7 +29,6 @@
                 android:id="@+id/buttonStartCoroutine"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_medium"
                 android:text="Start Coroutine"
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -41,7 +40,6 @@
                 android:id="@+id/buttonStopCoroutine"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_medium"
                 android:text="Stop Coroutine"
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -59,13 +57,12 @@
                 android:text="Coroutine Not Started"
                 android:gravity="center"
                 android:textSize="24dp"
-                android:fontFamily="@font/roboto_medium"/>
+                />
 
             <Button
                 android:id="@+id/buttonStartCoroutine1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_medium"
                 android:text="Start Coroutine 1"
                 android:layout_marginTop="48dp"
                 android:textColor="@color/white"
@@ -78,7 +75,6 @@
                 android:id="@+id/buttonStopCoroutine1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_medium"
                 android:text="Stop Coroutine 1"
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -96,13 +92,12 @@
                 android:text="Coroutine 1 Not Started"
                 android:gravity="center"
                 android:textSize="24dp"
-                android:fontFamily="@font/roboto_medium"/>
+                />
 
             <Button
                 android:id="@+id/buttonStartActivity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_medium"
                 android:text="Start Test Activity"
                 android:textColor="@color/white"
                 android:layout_marginTop="24dp"

@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.androidready.demo.databinding.ActivityMainBinding
 import kotlinx.coroutines.*
 
@@ -29,7 +30,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
 
         //coroutineDemo()
         //setupCoroutine()
-        //setupCoroutine1()
+        setupCoroutine1()
 
 
         binding.buttonStartActivity.setOnClickListener(View.OnClickListener {
@@ -37,10 +38,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
             finish()
         })
 
-        //dispatcherDemo()
+        dispatcherDemo()
 
         //asyncDemo()
-        runBlockingDemo()
+        //runBlockingDemo()
     }
 
     private fun runBlockingDemo() {
@@ -64,12 +65,15 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
 
     private fun dispatcherDemo() {
 //        GlobalScope.launch(Dispatchers.Main) {
+//            Thread.sleep(5000)
 //            fetchDataFromServer()
 //        }
 
-        GlobalScope.launch(Dispatchers.IO) {
-            fetchDataFromServer()
-        }
+//        GlobalScope.launch(Dispatchers.IO) {
+//            Thread.sleep(5000)
+//
+//            fetchDataFromServer()
+//        }
 
 //        GlobalScope.launch(Dispatchers.Default) {
 //            fetchDataFromServer()
