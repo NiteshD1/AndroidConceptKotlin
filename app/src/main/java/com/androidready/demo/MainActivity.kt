@@ -42,11 +42,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
                         val productInfo = "Product Id : ${it.id} \nProduct Title : ${it.title} \nProduct Price : ${it.price} \n"
                         mutableListOfProduct.add(productInfo)
                     }
-                    mutableListOfProduct.let {
-                        withContext(Dispatchers.Main){
-                            val arrayAdapter = ArrayAdapter(this@MainActivity,android.R.layout.simple_list_item_1,mutableListOfProduct)
-                            binding.listView.adapter = arrayAdapter
-                        }
+                    withContext(Dispatchers.Main){
+                        val arrayAdapter = ArrayAdapter(this@MainActivity,android.R.layout.simple_list_item_1,mutableListOfProduct)
+                        binding.listView.adapter = arrayAdapter
                     }
                 }
             }else{
