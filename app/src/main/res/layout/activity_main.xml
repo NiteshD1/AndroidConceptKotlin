@@ -33,12 +33,11 @@
                 android:text="Retrofit Demo"
                 android:gravity="center"
                 android:textSize="24dp"
-                android:fontFamily="@font/roboto_medium"/>
+                />
             <Button
                 android:id="@+id/buttonStartWorkManager"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_medium"
                 android:layout_marginTop="16dp"
                 android:text="Start Work Manager"
                 android:textColor="@color/white"
@@ -51,7 +50,6 @@
                 android:id="@+id/buttonStopWorkManager"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_medium"
                 android:layout_marginTop="16dp"
                 android:text="Stop Work Manager"
                 android:textColor="@color/white"
@@ -65,7 +63,6 @@
                 android:id="@+id/buttonFetchData"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_medium"
                 android:layout_marginTop="8dp"
                 android:text="Fetch Product Data"
                 android:textColor="@color/white"
