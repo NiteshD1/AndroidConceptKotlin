@@ -4,7 +4,10 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.Settings
@@ -22,14 +25,17 @@ import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import kotlinx.coroutines.*
+import timber.log.Timber
 import java.io.*
+import java.net.URL
+
 
 class MainActivity : AppCompatActivity(), View.OnClickListener{
 
     private lateinit var myExternalFile: File
     private lateinit var binding: ActivityMainBinding
     val filename = "myfile"
-    val externalFileName = "AndroidReadyDemoFile"
+    val externalFileName = "AndroidReadyDemoFile.txt"
     private val externalStorageFilePath = "AndroidReadyFolder"
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,6 +69,20 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
         binding.buttonFetchData.setOnClickListener(View.OnClickListener {
             retrofitDemo()
         })
+
+        GlobalScope.launch(Dispatchers.IO) {
+            saveImageToPublicStorage()
+        }
+    }
+
+    private suspend fun saveImageToPublicStorage() {
+        try {
+            val url = URL("https://picsum.photos/200/300")
+            val image = BitmapFactory.decodeStream(url.openConnection().getInputStream())
+            saveMediaToStorage(image)
+        } catch (e: IOException) {
+            println(e)
+        }
     }
 
     private fun readFromExternalFile() {
@@ -80,6 +100,34 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
 
         } catch (e: IOException) {
             e.printStackTrace()
+        }
+    }
+
+
+    suspend fun saveMediaToStorage(bitmap: Bitmap) {
+        //Generating a file name
+        val filename = "${System.currentTimeMillis()}.jpg"
+
+        //Output stream
+        var fos: OutputStream? = null
+
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q)
+        {
+            //These for devices running on android < Q
+            //So I don't think an explanation is needed here
+            val imagesDir =
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+            val image = File(imagesDir, filename)
+            fos = FileOutputStream(image)
+        }
+
+        fos?.use {
+            //Finally writing the bitmap to the output stream that we opened
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, it)
+            withContext(Dispatchers.Main){
+                Utils.showToast("Saved to Photos")
+            }
         }
     }
 
@@ -145,8 +193,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
             // below line is use to run the permissions on same thread and to check the permissions
             .onSameThread().check()
     }
-
-
     // below is the shoe setting dialog method
     // which is use to display a dialogue message.
     private fun showSettingsDialog() {
