@@ -10,7 +10,6 @@
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/roboto_medium"
         android:gravity="center"
         android:text="DashBoard Activity"
         android:textColor="@color/black"

@@ -9,7 +9,7 @@ class MainApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         MainApplication.appContext = applicationContext
-        MainApplication.prefs = Prefs(applicationContext)
+        prefs = Prefs(applicationContext)
 
         if(BuildConfig.DEBUG){
             Timber.plant(Timber.DebugTree());
