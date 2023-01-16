@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
     val filename = "myfile"
     val externalFileName = "AndroidReadyDemoFile"
     private val externalStorageFilePath = "AndroidReadyFolder"
-    private lateinit var db: ProductDatabase
+    private var db: ProductDatabase? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,11 +32,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
         val view = binding.root
         setContentView(view)
         println("Activity : onCreate")
-        db = ProductDatabase(this)
+        db = ProductDatabase.getInstance()
 
 
         binding.buttonAddProduct.setOnClickListener(View.OnClickListener {
-            GlobalScope.launch {
+            GlobalScope.launch(Dispatchers.IO) {
                 val id = binding.editTextId.text.toString().toInt()
                 val name = binding.editTextName.text.toString()
                 val price = binding.editTextPrice.text.toString().toInt()
@@ -54,10 +54,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
         binding.buttonDeleteProducts.setOnClickListener(View.OnClickListener {
             GlobalScope.launch(Dispatchers.IO) {
                 if(binding.editTextId.text.toString().equals("")){
-                    db.getProductDao().deleteAll()
+                    db?.getProductDao()?.deleteAll()
                 }else{
                     val id = binding.editTextId.text.toString().toInt()
-                    db.getProductDao().deleteById(id)
+                    db?.getProductDao()?.deleteById(id)
                 }
                 withContext(Dispatchers.Main){
                     Utils.showToast("Deleted")
@@ -69,7 +69,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
     }
 
     private suspend fun showAllProducts() {
-         var products = db.getProductDao().getAllProducts()
+         var products = db?.getProductDao()?.getAllProducts() ?: mutableListOf()
 
          products.let {
              withContext(Dispatchers.Main){
@@ -80,7 +80,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
     }
 
     private suspend fun addProductToDb(product: Product) {
-           db.getProductDao().upsert(product)
+        db?.getProductDao()?.upsert(product)
            withContext(Dispatchers.Main){
                Utils.showToast("Product Added")
            }

@@ -34,7 +34,7 @@
                 android:textColor="@color/black"
                 android:gravity="center"
                 android:textSize="24sp"
-                android:fontFamily="@font/roboto_medium"/>
+                />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
@@ -74,7 +74,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:fontFamily="@font/roboto_medium"
                 android:text="Add Product"
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -86,7 +85,6 @@
                 android:id="@+id/buttonDeleteProducts"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_medium"
                 android:visibility="visible"
                 android:text="Delete Product"
                 android:textColor="@color/white"
@@ -100,7 +98,6 @@
                 android:id="@+id/buttonShowProducts"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_medium"
                 android:visibility="visible"
                 android:text="Show Products"
                 android:textColor="@color/white"
@@ -109,8 +106,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.23000002" />
-
-
 
             <ListView
                 android:id="@+id/listView"

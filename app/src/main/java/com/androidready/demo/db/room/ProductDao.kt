@@ -10,7 +10,7 @@ interface ProductDao {
     suspend fun upsert(product: Product)
 
     @Query("SELECT * FROM products")
-    suspend fun getAllProducts(): List<Product>
+    suspend fun getAllProducts(): MutableList<Product>
 
     @Delete()
     suspend fun deleteProduct(product: Product)

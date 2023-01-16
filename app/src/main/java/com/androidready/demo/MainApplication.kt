@@ -3,6 +3,7 @@ package com.androidready.demo
 import android.app.Application
 import android.content.Context
 import com.androidready.demo.db.Prefs
+import com.androidready.demo.db.room.ProductDatabase
 import timber.log.Timber
 
 class MainApplication : Application() {
@@ -10,6 +11,7 @@ class MainApplication : Application() {
         super.onCreate()
         MainApplication.appContext = applicationContext
         MainApplication.prefs = Prefs(applicationContext)
+        db = ProductDatabase.getInstance()
 
         if(BuildConfig.DEBUG){
             Timber.plant(Timber.DebugTree());
@@ -23,7 +25,7 @@ class MainApplication : Application() {
         lateinit  var appContext: Context
 
         var prefs: Prefs? = null
-
+        var db: ProductDatabase? = null
 
     }
 
