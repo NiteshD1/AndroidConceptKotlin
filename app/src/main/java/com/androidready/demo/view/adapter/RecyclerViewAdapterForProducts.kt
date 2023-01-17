@@ -10,15 +10,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.androidready.demo.MainApplication
 import com.androidready.demo.R
 import com.androidready.demo.Utils
-import com.androidready.demo.model.db.room.ProductDatabase
-import com.androidready.demo.model.models.Product
+import com.androidready.demo.db.room.ProductDatabase
+import com.androidready.demo.models.Product
 import com.bumptech.glide.Glide
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class RecyclerViewAdapterForProducts(private val mList: MutableList<Product>,val isSavedProduct : Boolean) : RecyclerView.Adapter<RecyclerViewAdapterForProducts.ViewHolder>() {
+class RecyclerViewAdapterForProducts(private val mList: MutableList<Product>, val isSavedProduct : Boolean) : RecyclerView.Adapter<RecyclerViewAdapterForProducts.ViewHolder>() {
 
     val dao = ProductDatabase.getInstance()?.getProductDao()
 

@@ -8,9 +8,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.work.*
 import com.androidready.demo.Utils
 import com.androidready.demo.databinding.ActivityMainBinding
-import com.androidready.demo.model.api.RetrofitInstance
-import com.androidready.demo.model.db.room.ProductDatabase
-import com.androidready.demo.model.models.Product
+import com.androidready.demo.api.RetrofitInstance
+import com.androidready.demo.db.room.ProductDatabase
+import com.androidready.demo.models.Product
 import com.androidready.demo.view.adapter.RecyclerViewAdapterForProducts
 import kotlinx.coroutines.*
 import java.io.*
@@ -82,7 +82,7 @@ class MainActivity : AppCompatActivity(){
         }
     }
 
-    private fun setupRecyclerView(products: List<Product>?,isSavedProduct : Boolean = false) {
+    private fun setupRecyclerView(products: List<Product>?, isSavedProduct : Boolean = false) {
 
         adapter = RecyclerViewAdapterForProducts(
             products?.toMutableList() ?: mutableListOf(),

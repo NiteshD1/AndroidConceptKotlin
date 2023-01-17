@@ -1,7 +1,7 @@
-package com.androidready.demo.model.db.room
+package com.androidready.demo.db.room
 
 import androidx.room.*
-import com.androidready.demo.model.models.Product
+import com.androidready.demo.models.Product
 
 @Dao
 interface ProductDao {
