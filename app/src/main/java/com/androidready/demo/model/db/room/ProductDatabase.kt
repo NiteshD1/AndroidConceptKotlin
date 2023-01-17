@@ -1,4 +1,4 @@
-package com.androidready.demo.db.room
+package com.androidready.demo.model.db.room
 
 import android.content.Context
 import androidx.room.Database
@@ -6,11 +6,11 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.androidready.demo.MainApplication
-import com.androidready.demo.models.Product
+import com.androidready.demo.model.models.Product
 
 @Database(
     entities = [Product::class],
-    version = 2
+    version = 3
 )
 
 
@@ -25,7 +25,7 @@ abstract class ProductDatabase : RoomDatabase() {
         private var instance: ProductDatabase? = null
 
         fun getInstance() : ProductDatabase? {
-            return instance?: createDatabase()
+            return instance ?: createDatabase()
         }
 
         private fun createDatabase(): ProductDatabase? {

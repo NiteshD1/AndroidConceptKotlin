@@ -1,4 +1,4 @@
-package com.androidready.demo.db
+package com.androidready.demo.model.db
 
 import android.content.Context
 import android.content.SharedPreferences

@@ -1,4 +1,4 @@
-package com.androidready.demo.api
+package com.androidready.demo.model.api
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 

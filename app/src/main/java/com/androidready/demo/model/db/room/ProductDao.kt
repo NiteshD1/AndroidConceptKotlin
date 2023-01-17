@@ -1,7 +1,7 @@
-package com.androidready.demo.db.room
+package com.androidready.demo.model.db.room
 
 import androidx.room.*
-import com.androidready.demo.models.Product
+import com.androidready.demo.model.models.Product
 
 @Dao
 interface ProductDao {
@@ -20,6 +20,9 @@ interface ProductDao {
 
     @Query("DELETE FROM products WHERE id = :productId")
     suspend fun deleteById(productId : Int)
+
+    @Query("SELECT * FROM products WHERE id = :productId")
+    suspend fun getById(productId : Int) : Product?
 
 
 }
