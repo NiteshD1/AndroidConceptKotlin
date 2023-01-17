@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.androidready.demo.MainApplication
 import com.androidready.demo.R
 import com.androidready.demo.Utils
+import com.androidready.demo.controller.MainController
 import com.androidready.demo.model.db.room.ProductDatabase
 import com.androidready.demo.model.models.Product
 import com.bumptech.glide.Glide
@@ -20,7 +21,7 @@ import kotlinx.coroutines.withContext
 
 class RecyclerViewAdapterForProducts(private val mList: MutableList<Product>,val isSavedProduct : Boolean) : RecyclerView.Adapter<RecyclerViewAdapterForProducts.ViewHolder>() {
 
-    val dao = ProductDatabase.getInstance()?.getProductDao()
+    private val controller = MainController()
 
     // create new views
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -40,6 +41,7 @@ class RecyclerViewAdapterForProducts(private val mList: MutableList<Product>,val
 
         Glide.with(MainApplication.appContext)
             .load(product.imageUrl)
+            .placeholder(R.drawable.placeholder_image)
             .into(holder.imageView)
 
         holder.textViewName.text = product.name.toString()
@@ -50,6 +52,10 @@ class RecyclerViewAdapterForProducts(private val mList: MutableList<Product>,val
         holder.buttonSave.setOnClickListener{
             GlobalScope.launch(Dispatchers.IO) {
                 if(isSavedProduct){
+                    mList.remove(product)
+                    withContext(Dispatchers.Main){
+                        notifyDataSetChanged()
+                    }
                     removeProductFromDb(product)
                 }else{
                     addProductToDb(product)
@@ -59,21 +65,11 @@ class RecyclerViewAdapterForProducts(private val mList: MutableList<Product>,val
     }
 
     suspend fun addProductToDb(product: Product){
-        if(dao?.getById(product.id) == null){
-            dao?.upsert(product)
-            Utils.showToastOnMainThread("Product Saved!")
-        }else{
-            Utils.showToastOnMainThread("Product Already Saved!")
-        }
+        controller.addProductToDb(product)
     }
 
     suspend fun removeProductFromDb(product: Product){
-        dao?.deleteProduct(product)
-        mList.remove(product)
-        withContext(Dispatchers.Main){
-            notifyDataSetChanged()
-        }
-        Utils.showToastOnMainThread("Product Deleted!")
+        controller.removeProductFromDb(product)
     }
     // return the number of the items in the list
     override fun getItemCount(): Int {
@@ -86,7 +82,5 @@ class RecyclerViewAdapterForProducts(private val mList: MutableList<Product>,val
         val textViewName: TextView = itemView.findViewById(R.id.textViewProductName)
         val textViewPrice: TextView = itemView.findViewById(R.id.textViewPrice)
         val buttonSave: TextView = itemView.findViewById(R.id.buttonSave)
-
-
     }
 }
