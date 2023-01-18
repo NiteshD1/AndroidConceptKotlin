@@ -2,8 +2,8 @@ package com.androidready.demo
 
 import android.app.Application
 import android.content.Context
-import com.androidready.demo.model.db.Prefs
-import com.androidready.demo.model.db.room.ProductDatabase
+import com.androidready.demo.data.db.Prefs
+import com.androidready.demo.data.db.room.ProductDatabase
 import timber.log.Timber
 
 class MainApplication : Application() {

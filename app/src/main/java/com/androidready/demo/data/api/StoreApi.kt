@@ -1,6 +1,6 @@
-package com.androidready.demo.model.api
+package com.androidready.demo.data.api
 
-import com.androidready.demo.model.models.Product
+import com.androidready.demo.data.models.Product
 import retrofit2.Response
 import retrofit2.http.GET
 

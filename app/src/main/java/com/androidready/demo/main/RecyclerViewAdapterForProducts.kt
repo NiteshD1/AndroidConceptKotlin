@@ -1,4 +1,4 @@
-package com.androidready.demo.view.adapter
+package com.androidready.demo.main
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -9,19 +9,15 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.androidready.demo.MainApplication
 import com.androidready.demo.R
-import com.androidready.demo.Utils
-import com.androidready.demo.controller.MainController
-import com.androidready.demo.model.db.room.ProductDatabase
-import com.androidready.demo.model.models.Product
+import com.androidready.demo.data.models.Product
 import com.bumptech.glide.Glide
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class RecyclerViewAdapterForProducts(private val mList: MutableList<Product>,val isSavedProduct : Boolean) : RecyclerView.Adapter<RecyclerViewAdapterForProducts.ViewHolder>() {
+class RecyclerViewAdapterForProducts(private val mList: MutableList<Product>,val isSavedProduct : Boolean,val dbCallback: DbCallback) : RecyclerView.Adapter<RecyclerViewAdapterForProducts.ViewHolder>() {
 
-    private val controller = MainController()
 
     // create new views
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -56,21 +52,14 @@ class RecyclerViewAdapterForProducts(private val mList: MutableList<Product>,val
                     withContext(Dispatchers.Main){
                         notifyDataSetChanged()
                     }
-                    removeProductFromDb(product)
+                    dbCallback.removeProductFromDb(product)
                 }else{
-                    addProductToDb(product)
+                    dbCallback.addProductToDb(product)
                 }
             }
         }
     }
 
-    suspend fun addProductToDb(product: Product){
-        controller.addProductToDb(product)
-    }
-
-    suspend fun removeProductFromDb(product: Product){
-        controller.removeProductFromDb(product)
-    }
     // return the number of the items in the list
     override fun getItemCount(): Int {
         return mList.size

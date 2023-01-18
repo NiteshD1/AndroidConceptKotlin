@@ -1,4 +1,4 @@
-package com.androidready.demo.model.models
+package com.androidready.demo.data.models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

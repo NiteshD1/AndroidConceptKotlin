@@ -1,4 +1,4 @@
-package com.androidready.demo.view
+package com.androidready.demo.main
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -6,23 +6,17 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.work.*
-import com.androidready.demo.Utils
-import com.androidready.demo.controller.MainController
 import com.androidready.demo.databinding.ActivityMainBinding
-import com.androidready.demo.model.api.RetrofitInstance
-import com.androidready.demo.model.db.room.ProductDatabase
-import com.androidready.demo.model.models.Product
-import com.androidready.demo.view.adapter.RecyclerViewAdapterForProducts
+import com.androidready.demo.data.models.Product
 import kotlinx.coroutines.*
 import java.io.*
 
-class MainActivity : AppCompatActivity(){
+class MainActivity : AppCompatActivity(),MainActivityViewContract,DbCallback{
 
     private lateinit var binding: ActivityMainBinding
-    var productList : List<Product>? = listOf<Product>()
-    var savedProductList : List<Product>? = listOf<Product>()
     private lateinit var adapter : RecyclerViewAdapterForProducts
-    private val controller = MainController()
+
+    private var presenter: MainActivityPresenterContract? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,45 +26,33 @@ class MainActivity : AppCompatActivity(){
         println("Activity : onCreate")
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
 
-        setupRecyclerView(productList)
+        presenter = MainActivityPresenter(this)
+        //setupRecyclerView(listOf())
 
 
         binding.buttonLoadAllProducts.setOnClickListener{
             binding.progressBar.visibility = View.VISIBLE
             GlobalScope.launch(Dispatchers.IO) {
-                displayAllProductFromNetwork()
+                (presenter as MainActivityPresenter).fetchAllProductsFromServer()
             }
         }
 
         binding.buttonLoadSavedProducts.setOnClickListener{
             binding.progressBar.visibility = View.VISIBLE
             GlobalScope.launch(Dispatchers.IO) {
-                displaySavedProductFromDb()
+                (presenter as MainActivityPresenter).fetchAllSavedProductsFromDb()
             }
         }
     }
 
-    suspend fun displaySavedProductFromDb() {
-        withContext(Dispatchers.Main){
-            binding.progressBar.visibility = View.GONE
-            savedProductList = controller.getAllProductFromDb()
-            setupRecyclerView(savedProductList,true)
-        }
-    }
 
-    suspend fun displayAllProductFromNetwork() {
-        withContext(Dispatchers.Main){
-            binding.progressBar.visibility = View.GONE
-            productList = controller.getAllProductFromServer()
-            setupRecyclerView(productList)
-        }
-    }
 
     private fun setupRecyclerView(products: List<Product>?,isSavedProduct : Boolean = false) {
 
         adapter = RecyclerViewAdapterForProducts(
             products?.toMutableList() ?: mutableListOf(),
-            isSavedProduct
+            isSavedProduct,
+            this
         )
 
         // Setting the Adapter with the recyclerview
@@ -86,8 +68,21 @@ class MainActivity : AppCompatActivity(){
         super.onBackPressed()
     }
 
+    override suspend fun displayProductList(productList: List<Product>?, isSavedProducts: Boolean) {
 
+        withContext(Dispatchers.Main){
+            binding.progressBar.visibility = View.GONE
+            setupRecyclerView(productList,isSavedProducts)
+        }
+    }
 
+    override suspend fun addProductToDb(product: Product) {
+        presenter?.addProductIntoDb(product)
+    }
+
+    override suspend fun removeProductFromDb(product: Product) {
+        presenter?.removeProductFromDb(product)
+    }
 }
 
 
