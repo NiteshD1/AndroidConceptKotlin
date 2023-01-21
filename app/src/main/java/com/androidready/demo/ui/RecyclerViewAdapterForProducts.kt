@@ -1,4 +1,4 @@
-package com.androidready.demo.main
+package com.androidready.demo.ui
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -11,13 +11,8 @@ import com.androidready.demo.MainApplication
 import com.androidready.demo.R
 import com.androidready.demo.data.models.Product
 import com.bumptech.glide.Glide
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
-class RecyclerViewAdapterForProducts(private val mList: MutableList<Product>,val isSavedProduct : Boolean,val dbCallback: DbCallback) : RecyclerView.Adapter<RecyclerViewAdapterForProducts.ViewHolder>() {
-
+class RecyclerViewAdapterForProducts(private val mList: MutableList<Product>,val isSavedProduct : Boolean,val viewModel: MainViewModel) : RecyclerView.Adapter<RecyclerViewAdapterForProducts.ViewHolder>() {
 
     // create new views
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -46,16 +41,12 @@ class RecyclerViewAdapterForProducts(private val mList: MutableList<Product>,val
         if(isSavedProduct) holder.buttonSave.text = "Delete"
 
         holder.buttonSave.setOnClickListener{
-            GlobalScope.launch(Dispatchers.IO) {
-                if(isSavedProduct){
-                    mList.remove(product)
-                    withContext(Dispatchers.Main){
-                        notifyDataSetChanged()
-                    }
-                    dbCallback.removeProductFromDb(product)
-                }else{
-                    dbCallback.addProductToDb(product)
-                }
+            if(isSavedProduct){
+                viewModel.removeProductFromDb(product)
+                mList.remove(product)
+                notifyDataSetChanged()
+            }else{
+                viewModel.addProductToDb(product)
             }
         }
     }

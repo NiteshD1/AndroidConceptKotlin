@@ -1,5 +1,6 @@
 package com.androidready.demo.data.db.room
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.androidready.demo.data.models.Product
 
@@ -10,7 +11,7 @@ interface ProductDao {
     suspend fun upsert(product: Product)
 
     @Query("SELECT * FROM products")
-    suspend fun getAllProducts(): MutableList<Product>
+    fun getAllProducts(): LiveData<List<Product>>
 
     @Delete()
     suspend fun deleteProduct(product: Product)
