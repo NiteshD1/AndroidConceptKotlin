@@ -1,16 +1,14 @@
 package com.androidready.demo.controller
 
-import android.view.View
 import com.androidready.demo.Utils
 import com.androidready.demo.model.api.RetrofitInstance
 import com.androidready.demo.model.db.room.ProductDatabase
 import com.androidready.demo.model.models.Product
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 
 class MainController {
 
     val dao = ProductDatabase.getInstance()?.getProductDao()
+    var counter = 0
 
     suspend fun addProductToDb(product: Product){
         if(dao?.getById(product.id) == null){
@@ -46,5 +44,10 @@ class MainController {
             println("Product List could not be fetched" + responseProductList.errorBody().toString())
         }
         return productList
+    }
+
+    fun getCountValue(): Int{
+        counter += 1;
+        return counter
     }
 }

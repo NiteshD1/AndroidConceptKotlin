@@ -3,9 +3,12 @@ package com.androidready.demo.view
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.work.*
+import com.androidready.demo.MainViewModel
 import com.androidready.demo.Utils
 import com.androidready.demo.controller.MainController
 import com.androidready.demo.databinding.ActivityMainBinding
@@ -23,6 +26,7 @@ class MainActivity : AppCompatActivity(){
     var savedProductList : List<Product>? = listOf<Product>()
     private lateinit var adapter : RecyclerViewAdapterForProducts
     private val controller = MainController()
+    private val viewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +36,7 @@ class MainActivity : AppCompatActivity(){
         println("Activity : onCreate")
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
 
+        setupCounter()
         setupRecyclerView(productList)
 
 
@@ -46,6 +51,15 @@ class MainActivity : AppCompatActivity(){
             binding.progressBar.visibility = View.VISIBLE
             GlobalScope.launch(Dispatchers.IO) {
                 displaySavedProductFromDb()
+            }
+        }
+    }
+
+    private fun setupCounter() {
+        GlobalScope.launch(Dispatchers.Main) {
+            while (true){
+                binding.textViewCounter.text = viewModel.getCountValue().toString()
+                delay(1000)
             }
         }
     }
