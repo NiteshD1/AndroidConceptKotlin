@@ -101,10 +101,6 @@ class MainActivity : AppCompatActivity(){
         binding.recyclerView.adapter = adapter
     }
 
-
-
-
-
 }
 
 
